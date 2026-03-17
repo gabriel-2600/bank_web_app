@@ -1,8 +1,16 @@
 import { useEffect, useState } from "react";
 
+interface Rate {
+  rate: number;
+  source: string;
+  target: string;
+}
+
 function CurrencyConverter() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<Rate[]>([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const resultData = data?.[0];
 
   useEffect(() => {
     async function fetchData() {
@@ -10,13 +18,12 @@ function CurrencyConverter() {
 
       try {
         const response = await fetch(
-          "https://api.wise.com/v1/rates?source=EUR&target=USD",
+          "https://api.wise.com/v1/rates?source=USD&target=PHP",
           {
             mode: "cors",
             method: "GET",
             headers: {
               Authorization: `Bearer ${apiKey}`,
-              "Content-Type": "application/json",
             },
           },
         );
@@ -25,17 +32,27 @@ function CurrencyConverter() {
           throw new Error(`Error: ${response.status}`);
         }
 
-        const result = await response.json();
+        const result: Rate[] = await response.json();
         setData(result);
-      } catch (error) {
-        if (error instanceof Error) {
-          setError(error.message);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
         }
+      } finally {
+        setLoading(false);
       }
     }
 
     fetchData();
   }, []);
+
+  if (loading) {
+    return (
+      <div>
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   if (error) {
     return (
@@ -45,11 +62,15 @@ function CurrencyConverter() {
     );
   }
 
+  if (!resultData) {
+    return <p>No rate data available.</p>;
+  }
+
   return (
     <div>
-      <h2>{data && data[0]["rate"]}</h2>
-      <p>{data && data[0]["source"]}</p>
-      <p>{data && data[0]["target"]}</p>
+      <h2>{resultData.rate}</h2>
+      <p>{resultData.source}</p>
+      <p>{resultData.target}</p>
     </div>
   );
 }
