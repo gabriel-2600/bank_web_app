@@ -12,6 +12,12 @@ function CurrencyConverter() {
   const [error, setError] = useState<string | null>(null);
   const resultData = data?.[0];
 
+  const [inputCurrency, setInputCurrency] = useState(1);
+
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputCurrency(Number(e.target.value));
+  };
+
   useEffect(() => {
     async function fetchData() {
       const apiKey = import.meta.env.VITE_API_KEY;
@@ -68,9 +74,10 @@ function CurrencyConverter() {
 
   return (
     <div>
-      <h2>{resultData.rate}</h2>
+      <h2>{resultData.rate * inputCurrency}</h2>
       <p>{resultData.source}</p>
       <p>{resultData.target}</p>
+      <input type="number" value={inputCurrency} onChange={handleInput} />
     </div>
   );
 }
