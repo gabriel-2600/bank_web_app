@@ -1,56 +1,19 @@
-import { useEffect, useState } from "react";
-
-interface Rate {
-  rate: number;
-  source: string;
-  target: string;
-}
+import { useState } from "react";
+import SelectCurrency from "./SelectCurrency";
+import useExchangeRate from "./use-exchange-rate";
 
 function CurrencyConverter() {
-  const [data, setData] = useState<Rate[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const resultData = data?.[0];
+  const [sourceCurrency, setSourceCurrency] = useState("USD");
+  const [targetCurrency, setTargetCurrency] = useState("PHP");
+  const { resultData, loading, error } = useExchangeRate(
+    sourceCurrency,
+    targetCurrency,
+  );
 
-  const [inputCurrency, setInputCurrency] = useState(1);
-
+  const [amount, setAmount] = useState("1");
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputCurrency(Number(e.target.value));
+    setAmount(e.target.value);
   };
-
-  useEffect(() => {
-    async function fetchData() {
-      const apiKey = import.meta.env.VITE_API_KEY;
-
-      try {
-        const response = await fetch(
-          "https://api.wise.com/v1/rates?source=USD&target=PHP",
-          {
-            mode: "cors",
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${apiKey}`,
-            },
-          },
-        );
-
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status}`);
-        }
-
-        const result: Rate[] = await response.json();
-        setData(result);
-      } catch (err) {
-        if (err instanceof Error) {
-          setError(err.message);
-        }
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchData();
-  }, []);
 
   if (loading) {
     return (
@@ -74,10 +37,23 @@ function CurrencyConverter() {
 
   return (
     <div>
-      <h2>{resultData.rate * inputCurrency}</h2>
-      <p>{resultData.source}</p>
-      <p>{resultData.target}</p>
-      <input type="number" value={inputCurrency} onChange={handleInput} />
+      <div className="flex">
+        <input type="number" value={amount} onChange={handleInput} />
+        <SelectCurrency
+          currency={targetCurrency}
+          setCurrency={setTargetCurrency}
+        />
+        <p>to</p>
+        <SelectCurrency
+          currency={sourceCurrency}
+          setCurrency={setSourceCurrency}
+        />
+      </div>
+
+      <div className="flex">
+        <h2>{resultData.rate * Number(amount)}</h2>
+        <p>{resultData.source}</p>
+      </div>
     </div>
   );
 }
