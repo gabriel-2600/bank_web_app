@@ -13,19 +13,23 @@ function CreateAccountForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
-        <label>Account Name</label>
-        <input {...register("accountName", { required: true })} />
+        <label htmlFor="account-name">Account Name</label>
+        <input
+          id="account-name"
+          {...register("accountName", { required: true })}
+        />
       </div>
 
       <div>
-        <label>Balance</label>
+        <label htmlFor="balance">Balance</label>
         <input
+          id="balance"
           type="number"
           {...register("balance", { required: true, min: 0 })}
         />
       </div>
 
-      <input type="submit" />
+      <button type="submit">Create Account</button>
     </form>
   );
 }
