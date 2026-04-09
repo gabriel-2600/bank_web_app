@@ -1,10 +1,10 @@
-import DisplayAccount from "../components/HomePage/DisplayAccount";
+import DisplayAccounts from "../components/HomePage/DisplayAccounts";
 
 function HomePage() {
   return (
     <main>
       <p>Choose accounts</p>
-      <DisplayAccount />
+      <DisplayAccounts />
     </main>
   );
 }

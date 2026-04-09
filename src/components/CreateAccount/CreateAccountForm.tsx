@@ -7,6 +7,7 @@ type AccountContextType = {
 };
 
 interface AccountFormInterface {
+  accountID: string;
   accountName: string;
   balance: number;
 }
@@ -16,6 +17,8 @@ function CreateAccountForm() {
   const { register, handleSubmit, reset } = useForm<AccountFormInterface>();
 
   const onSubmit: SubmitHandler<AccountFormInterface> = (data) => {
+    const accountID = crypto.randomUUID();
+    data.accountID = accountID;
     console.log(data);
     setAccount((prevAccounts) => [...prevAccounts, data]);
     reset();

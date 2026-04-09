@@ -1,7 +1,8 @@
 import App from "./App";
-import CreateAccountPage from "./pages/CreateAccountPage";
-import ErrorPage from "./pages/ErrorPage";
 import HomePage from "./pages/HomePage";
+import ErrorPage from "./pages/ErrorPage";
+import CreateAccountPage from "./pages/CreateAccountPage";
+import AccountPage from "./pages/AccountPage/AccountPage";
 
 const routes = [
   {
@@ -13,6 +14,10 @@ const routes = [
       {
         path: "create-account",
         element: <CreateAccountPage />,
+      },
+      {
+        path: "account/:accountId",
+        element: <AccountPage />,
       },
     ],
   },

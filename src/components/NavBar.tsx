@@ -4,8 +4,14 @@ function NavBar() {
   return (
     <div>
       <nav>
-        <Link to="/">Home</Link>
-        <Link to="/create-account">Create Account</Link>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/create-account">Create Account</Link>
+          </li>
+        </ul>
       </nav>
     </div>
   );
