@@ -39,7 +39,11 @@ function CreateAccountForm() {
         <input
           id="balance"
           type="number"
-          {...register("balance", { required: true, min: 0 })}
+          {...register("balance", {
+            required: true,
+            min: 0,
+            valueAsNumber: true,
+          })}
         />
       </div>
 

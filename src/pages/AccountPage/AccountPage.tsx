@@ -25,9 +25,9 @@ function AccountPage() {
         <p>Account Balance: {account.balance}</p>
 
         <TransactionButton
-          accounts={accounts}
           accountId={accountId}
           account={account}
+          accounts={accounts}
           setAccounts={setAccounts}
         />
       </div>

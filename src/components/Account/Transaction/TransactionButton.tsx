@@ -2,18 +2,19 @@ import { useState } from "react";
 import Transfer from "./Transfer";
 import type { AccountInterface } from "../../../types/AccountInterface";
 import Withdraw from "./Withdraw";
+import Deposit from "./Deposit";
 
 type TransactionButtonProps = {
-  accounts: AccountInterface[];
   accountId: string;
   account: AccountInterface;
+  accounts: AccountInterface[];
   setAccounts: React.Dispatch<React.SetStateAction<AccountInterface[]>>;
 };
 
 function TransactionButton({
-  accounts,
   accountId,
   account,
+  accounts,
   setAccounts,
 }: TransactionButtonProps) {
   const [isTransferClicked, setIsTransferClicked] = useState(false);
@@ -46,7 +47,9 @@ function TransactionButton({
 
       <div>
         {isTransferClicked && <Transfer />}
-        {/* {isDepositClicked && } */}
+        {isDepositClicked && (
+          <Deposit accountId={accountId} setAccounts={setAccounts} />
+        )}
         {isWithdrawClicked && (
           <Withdraw
             accountId={accountId}

@@ -2,29 +2,23 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 
 import type { AccountInterface } from "../../../types/AccountInterface";
 
-type WithdrawProps = {
+type DepositProps = {
   accountId: string;
-  account: AccountInterface;
   setAccounts: React.Dispatch<React.SetStateAction<AccountInterface[]>>;
 };
 
-interface WithdrawFormInterface {
+interface DepositFormInterface {
   amount: number;
 }
 
-function Withdraw({ accountId, account, setAccounts }: WithdrawProps) {
-  const { register, handleSubmit, reset } = useForm<WithdrawFormInterface>();
+function Deposit({ accountId, setAccounts }: DepositProps) {
+  const { register, handleSubmit, reset } = useForm<DepositFormInterface>();
 
-  const onSubmit: SubmitHandler<WithdrawFormInterface> = ({ amount }) => {
-    if (account.balance < amount) {
-      console.log("not enough");
-      return;
-    }
-
+  const onSubmit: SubmitHandler<DepositFormInterface> = ({ amount }) => {
     setAccounts((prevAccounts) =>
       prevAccounts.map((account) =>
         account.accountID === accountId
-          ? { ...account, balance: account.balance - Number(amount) }
+          ? { ...account, balance: account.balance + amount }
           : account,
       ),
     );
@@ -33,7 +27,7 @@ function Withdraw({ accountId, account, setAccounts }: WithdrawProps) {
 
   return (
     <div>
-      <h1>Withdraw</h1>
+      <h1>Deposit</h1>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
@@ -44,16 +38,15 @@ function Withdraw({ accountId, account, setAccounts }: WithdrawProps) {
             {...register("amount", {
               required: true,
               min: 0,
-              max: account.balance,
               valueAsNumber: true,
             })}
           />
         </div>
 
-        <button type="submit">Withdraw</button>
+        <button type="submit">Deposit</button>
       </form>
     </div>
   );
 }
 
-export default Withdraw;
+export default Deposit;
