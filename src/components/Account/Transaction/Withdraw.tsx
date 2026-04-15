@@ -16,14 +16,13 @@ const inputClass =
   "w-full rounded-xl border border-black/15 bg-white px-3.5 py-2.5 text-sm text-black outline-none transition-colors placeholder:text-black/40 focus:border-[#8494FF]";
 
 function Withdraw({ accountId, account, setAccounts }: WithdrawProps) {
-  const { register, handleSubmit, reset } = useForm<WithdrawFormInterface>();
+  const { register, watch, handleSubmit, reset } =
+    useForm<WithdrawFormInterface>();
+  const amountValue = watch("amount");
+  const hasAmount = Number.isFinite(amountValue);
+  const isBalanceSufficient = amountValue <= account.balance;
 
   const onSubmit: SubmitHandler<WithdrawFormInterface> = ({ amount }) => {
-    if (account.balance < amount) {
-      console.log("not enough");
-      return;
-    }
-
     setAccounts((prevAccounts) =>
       prevAccounts.map((account) =>
         account.accountID === accountId
@@ -58,19 +57,26 @@ function Withdraw({ accountId, account, setAccounts }: WithdrawProps) {
             placeholder="0.00"
             {...register("amount", {
               required: true,
-              min: 0,
+              min: 1,
               max: account.balance,
               valueAsNumber: true,
             })}
           />
         </div>
 
-        <button
-          type="submit"
-          className="mt-1 flex w-fit items-center justify-center rounded-full bg-[#8494FF] px-5 py-2.5 text-sm font-semibold text-white transition-[filter] hover:brightness-105"
-        >
-          Withdraw
-        </button>
+        {hasAmount &&
+          (isBalanceSufficient ? (
+            <button
+              type="submit"
+              className="mt-1 flex w-fit items-center justify-center rounded-full bg-[#8494FF] px-5 py-2.5 text-sm font-semibold text-white transition-[filter] hover:brightness-105"
+            >
+              Withdraw
+            </button>
+          ) : (
+            <p className="mt-1 w-fit rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700">
+              Insufficient Balance
+            </p>
+          ))}
       </form>
     </div>
   );

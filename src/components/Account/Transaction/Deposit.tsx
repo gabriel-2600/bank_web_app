@@ -52,7 +52,7 @@ function Deposit({ accountId, setAccounts }: DepositProps) {
             placeholder="0.00"
             {...register("amount", {
               required: true,
-              min: 0,
+              min: 1,
               valueAsNumber: true,
             })}
           />

@@ -23,7 +23,11 @@ function Transfer({
   accounts,
   setAccounts,
 }: TransferProps) {
-  const { register, handleSubmit, reset } = useForm<TransferFormInterface>();
+  const { register, watch, handleSubmit, reset } =
+    useForm<TransferFormInterface>();
+  const amountValue = watch("amount");
+  const hasAmount = Number.isFinite(amountValue);
+  const isBalanceSufficient = amountValue <= account.balance;
 
   const onSubmit: SubmitHandler<TransferFormInterface> = ({
     toAccountID,
@@ -102,18 +106,25 @@ function Transfer({
             placeholder="0.00"
             {...register("amount", {
               required: true,
-              min: 0,
+              min: 1,
               valueAsNumber: true,
             })}
           />
         </div>
 
-        <button
-          type="submit"
-          className="mt-1 flex w-fit items-center justify-center rounded-full bg-[#8494FF] px-5 py-2.5 text-sm font-semibold text-white transition-[filter] hover:brightness-105"
-        >
-          Transfer
-        </button>
+        {hasAmount &&
+          (isBalanceSufficient ? (
+            <button
+              type="submit"
+              className="mt-1 flex w-fit items-center justify-center rounded-full bg-[#8494FF] px-5 py-2.5 text-sm font-semibold text-white transition-[filter] hover:brightness-105"
+            >
+              Transfer
+            </button>
+          ) : (
+            <p className="mt-1 w-fit rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700">
+              Insufficient Balance
+            </p>
+          ))}
       </form>
     </div>
   );
