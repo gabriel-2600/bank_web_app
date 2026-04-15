@@ -12,6 +12,9 @@ interface WithdrawFormInterface {
   amount: number;
 }
 
+const inputClass =
+  "w-full rounded-xl border border-black/15 bg-white px-3.5 py-2.5 text-sm text-black outline-none transition-colors placeholder:text-black/40 focus:border-[#8494FF]";
+
 function Withdraw({ accountId, account, setAccounts }: WithdrawProps) {
   const { register, handleSubmit, reset } = useForm<WithdrawFormInterface>();
 
@@ -32,15 +35,27 @@ function Withdraw({ accountId, account, setAccounts }: WithdrawProps) {
   };
 
   return (
-    <div>
-      <h1>Withdraw</h1>
+    <div className="space-y-4">
+      <div>
+        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#8494FF]">
+          Withdraw
+        </p>
+      </div>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label htmlFor="amount">Amount</label>
+      <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+        <div className="space-y-1.5">
+          <label
+            htmlFor="withdraw-amount"
+            className="text-sm font-medium tracking-tight text-black"
+          >
+            Amount
+          </label>
           <input
-            id="amount"
+            id="withdraw-amount"
             type="number"
+            step="0.01"
+            className={inputClass}
+            placeholder="0.00"
             {...register("amount", {
               required: true,
               min: 0,
@@ -50,7 +65,12 @@ function Withdraw({ accountId, account, setAccounts }: WithdrawProps) {
           />
         </div>
 
-        <button type="submit">Withdraw</button>
+        <button
+          type="submit"
+          className="mt-1 flex w-fit items-center justify-center rounded-full bg-[#8494FF] px-5 py-2.5 text-sm font-semibold text-white transition-[filter] hover:brightness-105"
+        >
+          Withdraw
+        </button>
       </form>
     </div>
   );

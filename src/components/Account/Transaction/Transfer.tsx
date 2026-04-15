@@ -14,6 +14,9 @@ interface TransferFormInterface {
   amount: number;
 }
 
+const inputClass =
+  "w-full rounded-xl border border-black/15 bg-white px-3.5 py-2.5 text-sm text-black outline-none transition-colors placeholder:text-black/40 focus:border-[#8494FF]";
+
 function Transfer({
   accountId,
   account,
@@ -59,24 +62,43 @@ function Transfer({
   };
 
   return (
-    <div>
-      <h1>Transfer</h1>
+    <div className="space-y-4">
+      <div>
+        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#8494FF]">
+          Transfer
+        </p>
+      </div>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label htmlFor="toAccountID">Recipient account ID</label>
+      <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+        <div className="space-y-1.5">
+          <label
+            htmlFor="transfer-to-account-id"
+            className="text-sm font-medium tracking-tight text-black"
+          >
+            Recipient account ID
+          </label>
           <input
-            id="toAccountID"
+            id="transfer-to-account-id"
             type="text"
+            className={inputClass}
+            placeholder="Recipient account ID"
             {...register("toAccountID", { required: true })}
           />
         </div>
 
-        <div>
-          <label htmlFor="amount">Amount</label>
+        <div className="space-y-1.5">
+          <label
+            htmlFor="transfer-amount"
+            className="text-sm font-medium tracking-tight text-black"
+          >
+            Amount
+          </label>
           <input
-            id="amount"
+            id="transfer-amount"
             type="number"
+            step="0.01"
+            className={inputClass}
+            placeholder="0.00"
             {...register("amount", {
               required: true,
               min: 0,
@@ -85,7 +107,12 @@ function Transfer({
           />
         </div>
 
-        <button type="submit">Transfer</button>
+        <button
+          type="submit"
+          className="mt-1 flex w-fit items-center justify-center rounded-full bg-[#8494FF] px-5 py-2.5 text-sm font-semibold text-white transition-[filter] hover:brightness-105"
+        >
+          Transfer
+        </button>
       </form>
     </div>
   );

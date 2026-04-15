@@ -1,7 +1,7 @@
 import App from "./App";
 import HomePage from "./pages/HomePage";
 import ErrorPage from "./pages/ErrorPage";
-import CreateAccountPage from "./pages/CreateAccountPage";
+import CreateBankAccountForm from "./pages/CreateBankAccountPage";
 import AccountPage from "./pages/AccountPage/AccountPage";
 
 const routes = [
@@ -12,8 +12,8 @@ const routes = [
     children: [
       { index: true, element: <HomePage /> },
       {
-        path: "create-account",
-        element: <CreateAccountPage />,
+        path: "create-bank-account",
+        element: <CreateBankAccountForm />,
       },
       {
         path: "account/:accountId",
