@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { Outlet } from "react-router";
 
-import NavBar from "./components/NavBar";
 import type { AccountInterface } from "./types/AccountInterface";
 
 function App() {
@@ -10,7 +9,6 @@ function App() {
 
   return (
     <>
-      <NavBar />
       <Outlet context={{ accounts, setAccounts }} />
       <Toaster />
     </>
