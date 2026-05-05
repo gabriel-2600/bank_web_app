@@ -17,10 +17,6 @@ public class UsersService {
         return usersRepository.save(user);
     }
 
-    public Users updateUser(Users user){
-        return usersRepository.save(user);
-    }
-
     public Users getUserById(Long userID){
         return usersRepository.findById(userID).orElseThrow();
     }
