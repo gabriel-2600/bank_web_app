@@ -4,6 +4,7 @@ import ErrorPage from "./pages/ErrorPage";
 import CreateBankAccountForm from "./pages/CreateBankAccountPage";
 import AccountPage from "./pages/AccountPage/AccountPage";
 import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/LoginPage";
 
 const routes = [
   {
@@ -12,7 +13,7 @@ const routes = [
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: "register", element: <RegisterPage /> },
+
       {
         path: "create-bank-account",
         element: <CreateBankAccountForm />,
@@ -23,6 +24,8 @@ const routes = [
       },
     ],
   },
+  { path: "register", element: <RegisterPage /> },
+  { path: "login", element: <LoginPage /> },
 ];
 
 export default routes;
