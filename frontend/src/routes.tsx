@@ -7,6 +7,7 @@ import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import LandingPage from "./pages/LandingPage";
 import LandingErrorPage from "./pages/ErrorPages/LandingErrorPage";
+import AccountPageError from "./pages/ErrorPages/AccountPageError";
 
 const routes = [
   {
@@ -19,17 +20,12 @@ const routes = [
     element: <LoginPage />,
   },
   {
-    path: "login",
-    element: <LoginPage />,
-  },
-  {
     path: "register",
     element: <RegisterPage />,
   },
   {
     path: "app",
     element: <App />,
-    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -42,7 +38,9 @@ const routes = [
       {
         path: "account/:accountId",
         element: <AccountPage />,
+        errorElement: <AccountPageError />,
       },
+      { path: "*", element: <ErrorPage /> },
     ],
   },
 ];
