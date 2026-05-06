@@ -3,6 +3,7 @@ import {
   successfulToast,
   errorToast,
 } from "../../../util/toast-notifcation.ts";
+import { performRegistration } from "../../../api/Registration/performRegistration.ts";
 
 interface RegistrationFormInterface {
   fullName: string;
@@ -25,12 +26,7 @@ function RegistrationForm() {
   const isPasswordMismatch = password !== confirmPassword;
 
   const onSubmit: SubmitHandler<RegistrationFormInterface> = (data) => {
-    if (
-      !data.fullName ||
-      !data.username ||
-      !data.password ||
-      !data.confirmPassword
-    ) {
+    if (!data.fullName || !data.username || !data.password) {
       errorToast("Fields cannot be empty!");
       return;
     }
@@ -40,7 +36,14 @@ function RegistrationForm() {
       return;
     }
 
-    console.log(data);
+    const registrationData = {
+      fullName: data.fullName,
+      username: data.username,
+      password: data.password,
+    };
+
+    const result = performRegistration(registrationData);
+    console.log(result);
 
     successfulToast("Registered Successfully!");
     reset();

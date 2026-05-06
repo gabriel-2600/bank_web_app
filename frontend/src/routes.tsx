@@ -26,6 +26,7 @@ const routes = [
   {
     path: "app",
     element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
