@@ -1,19 +1,40 @@
 import App from "./App";
 import HomePage from "./pages/HomePage";
-import ErrorPage from "./pages/ErrorPage";
+import ErrorPage from "./pages/ErrorPages/ErrorPage";
 import CreateBankAccountForm from "./pages/CreateBankAccountPage";
 import AccountPage from "./pages/AccountPage/AccountPage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
+import LandingPage from "./pages/LandingPage";
+import LandingErrorPage from "./pages/ErrorPages/LandingErrorPage";
 
 const routes = [
   {
     path: "/",
+    element: <LandingPage />,
+    errorElement: <LandingErrorPage />,
+  },
+  {
+    path: "login",
+    element: <LoginPage />,
+  },
+  {
+    path: "login",
+    element: <LoginPage />,
+  },
+  {
+    path: "register",
+    element: <RegisterPage />,
+  },
+  {
+    path: "app",
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <HomePage /> },
-
+      {
+        index: true,
+        element: <HomePage />,
+      },
       {
         path: "create-bank-account",
         element: <CreateBankAccountForm />,
@@ -24,8 +45,6 @@ const routes = [
       },
     ],
   },
-  { path: "register", element: <RegisterPage /> },
-  { path: "login", element: <LoginPage /> },
 ];
 
 export default routes;

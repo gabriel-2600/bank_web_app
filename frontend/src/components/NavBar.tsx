@@ -5,7 +5,7 @@ function NavBar() {
     <header className="sticky top-0 z-50 border-b border-black/10 bg-white">
       <nav className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-3.5 sm:px-6">
         <Link
-          to="/"
+          to="/app"
           className="flex items-center gap-2 text-base font-semibold tracking-tight text-black transition-colors hover:text-[#8494FF]"
         >
           <span
@@ -18,7 +18,7 @@ function NavBar() {
         <ul className="flex flex-wrap items-center gap-2">
           <li>
             <Link
-              to="/"
+              to="/app"
               className="block rounded-lg px-3 py-2 text-sm font-medium text-black transition-colors hover:bg-black/5 hover:text-[#8494FF]"
             >
               Home
@@ -26,7 +26,7 @@ function NavBar() {
           </li>
           <li>
             <Link
-              to="/create-bank-account"
+              to="create-bank-account"
               className="block rounded-full bg-[#8494FF] px-4 py-2 text-sm font-semibold text-white transition-[filter] hover:brightness-105"
             >
               Create Bank Account
