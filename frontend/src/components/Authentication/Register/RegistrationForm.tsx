@@ -25,7 +25,7 @@ function RegistrationForm() {
   const confirmPassword = useWatch({ control, name: "confirmPassword" });
   const isPasswordMismatch = password !== confirmPassword;
 
-  const onSubmit: SubmitHandler<RegistrationFormInterface> = (data) => {
+  const onSubmit: SubmitHandler<RegistrationFormInterface> = async (data) => {
     if (!data.fullName || !data.username || !data.password) {
       errorToast("Fields cannot be empty!");
       return;
@@ -42,11 +42,15 @@ function RegistrationForm() {
       password: data.password,
     };
 
-    const result = performRegistration(registrationData);
-    console.log(result);
+    const result = await performRegistration(registrationData);
 
-    successfulToast("Registered Successfully!");
-    reset();
+    if (result) {
+      successfulToast("Registered Successfully!");
+      console.log(result);
+      reset();
+    } else {
+      errorToast("Registration Failed");
+    }
   };
 
   return (
