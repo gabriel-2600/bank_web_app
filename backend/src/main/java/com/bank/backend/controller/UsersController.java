@@ -5,7 +5,7 @@ import com.bank.backend.service.UsersService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api")
 public class UsersController {
     private final UsersService usersService;
 
@@ -13,17 +13,17 @@ public class UsersController {
         this.usersService = usersService;
     }
 
-    @PostMapping("/register")
+    @PostMapping("/auth/register")
     public Users registerUser(@RequestBody Users user){
         return usersService.createUser(user);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/user/{id}")
     public Users getUserById(@PathVariable Long id){
         return usersService.getUserById(id);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/user/delete/{id}")
     public void deleteUser(@PathVariable Long id){
         usersService.deleteById(id);
     }
